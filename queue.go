@@ -100,11 +100,13 @@ func ChceckForNextProcess() {
 				continue
 			}
 			numOfProcesses++
+			SlowDown = 0
 			IMPREP(nextImage.Input, nextImage.Output, nextImage.WorkerID)
 		} else {
 			SlowDown++
 		}
-		if SlowDown > 720 {
+		//When there was no new process in the last hour, slow down loop to check every 30 sec.
+		if SlowDown >= 720 {
 			time.Sleep(time.Second * 30)
 			SlowDown--
 		} else {
