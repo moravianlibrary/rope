@@ -1,0 +1,48 @@
+body, html {height: 100%}
+
+#main, #main-pero {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
+#main {
+  background-image: url('/src/waves.jpg');
+}
+
+#main-pero {
+  /* background-image: url('../../src/pero_bg.jpg'); */
+  background-image: url('/src/pero_bg.jpg');
+}
+
+.input-error{
+  outline: 1px solid red;
+}
+
+textarea:focus, input:focus{
+  outline: none;
+}
+
+.popup{
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.1);
+  text-align: center;
+  padding: 0 30px 30px;
+  color: azure;
+  visibility: hidden;
+  transition: transform 0.4s, top 0.4s;
+}
+
+.open-popup{
+  visibility: visible;
+  top: 50%;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.hide{
+  visibility: hidden;
+}

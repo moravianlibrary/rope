@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <title>rOPE - pero</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="/src/rope_drop.jpg">
+    <link rel="stylesheet" href="/static/css/mystyle.css">
+    <link rel="stylesheet" href="/static/css/styles.css">
+    <style>
+  </style>
+  </head>
+
+  <body>
+
+
+
+    <section id="main-pero">
+      <div class="sidebar fixed top-0 left-0 h-screen bg-dc-900 w-16 m-0 flex
+        flex-col justify-center shadow-lg">
+        <a href="/">
+          <div class="sidebar-icon group">
+
+            <i class="material-icons" style="font-size:30px">image</i>
+            <span class="sidebar-tooltip group-hover:scale-100">
+              IMGPREP
+            </span>
+
+          </div>
+
+
+          <a href="/pero">
+            <div class="sidebar-icon-current group">
+              <!-- <img id="brkimg" src="../../src/brk.png" class="h-10"> -->
+              <img id="brkimg" src="/src/brk.png" class="h-10">
+              <span class="sidebar-tooltip group-hover:scale-100">
+                PERO
+              </span>
+            </div>
+          </a>
+
+          <!-- <a href="/sound">
+            <div class="sidebar-icon group">
+              <i>sound</i>
+              <span class="sidebar-tooltip group-hover:scale-100">
+                SOUNDPREP
+              </span>
+            </div>
+          </a>
+  
+          <a href="/convertor">
+            <div class="sidebar-icon group">
+              <i>conv</i>
+              <span class="sidebar-tooltip group-hover:scale-100">
+                CONVERTOR
+              </span>
+            </div>
+          </a> -->
+
+          <a href="/processes">
+            <div class="sidebar-icon group">
+              <i>logs</i>
+              <span class="sidebar-tooltip group-hover:scale-100">
+                LOGS
+              </span>
+            </div>
+          </a>
+
+          <a href="http://dk-wiki.infra.mzk.cz/doku.php?id=rope" target="_blank">
+            <div class="sidebar-icon group">
+              <i>wiki</i>
+              <span class="sidebar-tooltip group-hover:scale-100">
+                WIKI
+              </span>
+            </div>
+          </a>
+  <!-- 
+
+          <div class="sidebar-icon group">
+            <i>A</i>
+            <span class="sidebar-tooltip group-hover:scale-100">
+              test
+            </span>
+          </div> -->
+        </div>
+
+        <div class="flex flex-col items-center justify-center h-screen
+          space-y-24 md:space-y-48">
+          <div class="max-w-max text-white">
+            <a href="/pero">
+              <h1 class="text-4xl align-middle drop-shadow-2xl">this is PERO</h1>
+            </a>
+          </div>
+          <!-- FORM BEGINNING -->
+          <form>
+            <div class="container flex flex-col px-6 mx-auto justify-evenly
+              space-y-28">
+              <!-- TODO after submit maybe do not redirect do different site? -->
+              <!-- Folder input for running pero -->
+              <!-- <div class="container">
+                <input id="filename" type="text" class="w-64 md:w-96 h-10
+                  rounded-lg border-none pl-3" placeholder="Enter filepath"
+                  name="filename" autofocus>
+                 TODO add the button inside of text input 
+                   <button type="button" id="chosenFile" name="chosenFile" class="w-12 h-12
+                  text-light"
+                  onclick="openPopup()">Search</button> 
+                 <input type="file" id="i_file" value="" webkitdirectory directory multiple onchange="myFunction()"/> 
+                  <button id="btn" type="button">Choose Directory</button>
+
+              </div> -->
+
+
+              <div class="container">
+                <input id="filename" type="text" class="w-64 md:w-96 h-10
+                  rounded-lg border-none pl-3" placeholder="Enter filepath"
+                  name="filename" autofocus>
+                <!-- TODO add the button inside of text input -->
+                <button type="button" id="chosenFile" name="chosenFile" class="w-12 h-12
+                  text-light"
+                  onclick="openPopup()">Search</button>
+
+                  <div style="max-height: 83%; min-height: 50%;" class="popup w-10/12 border-solid absolute bg-dark rounded-2xl flex justify-evenly flex-col" id="popup">
+                    <div class="flex flex-col justify-center">
+                      <h2 class="text-xl font-bold pt-2 pb-2">Choose your file</h2>
+                      <div>
+                        <label>Chosen file: </label><label id="chosenFileOutput"> </label>
+                      </div>
+                    </div>
+
+
+                    <div style="max-height:66%" class="overflow-y-auto">
+                      <table class="w-full table-auto border-collapse text-sm text-left">
+                        {{ range .files }}
+                        <tr class="h-8 border-t border-b border-white">
+                          <th class="whitespace-nowrap"><button type="button" onclick="selectInput('{{ .Path }}')">{{ .FolderName }}</button></th>
+                        </tr>
+                        {{ range .SubFolders }}
+                        <tr class="h-8 border-t border-b border-white">
+                          <th class="w-12"></th>
+                          <th class="{{ .Index }} whitespace-nowrap">
+                            <button type="button" onclick="selectInput('{{ .Path }}')">{{ .FolderName }}</button>
+                          </th>
+
+                          {{ range .SubFolders }}
+                          <tr class="h-8 border-t border-b border-white">
+                            <th class="w-12"></th>
+                            <th class="w-12"></th>
+                            <th class="{{ .Index }} whitespace-nowrap" >
+                              <button type="button" onclick="selectInput('{{ .Path }}')">{{ .FolderName }}</button>
+                            </th>
+
+
+                          {{ range .SubFolders }}
+                          <tr class="h-8 border-t border-b border-white">
+                            <th class="w-12"></th>
+                            <th class="w-12"></th>
+                            <th class="w-12"></th>
+                            <th class="{{ .Index }} whitespace-nowrap" >
+                              <button type="button" onclick="selectInput('{{ .Path }}')">{{ .FolderName }}</button>
+                            </th>
+
+                            {{ range .SubFolders }}
+                            <tr class="h-8 border-t border-b border-white">
+                              <th class="w-12"></th>
+                              <th class="w-12"></th>
+                              <th class="w-12"></th>
+                              <th class="w-12"></th>
+                              <th class="{{ .Index }} whitespace-nowrap" >
+                                <button type="button" onclick="selectInput('{{ .Path }}')">{{ .FolderName }}</button>
+                              </th>
+      
+                              
+                            </tr>
+                            {{ end }}
+    
+                            
+                          </tr>
+                          {{ end }}
+    
+                            
+                          </tr>
+                          {{ end }}
+                          </tr>
+                          {{ end }}
+                          {{ end }}
+                      </table>
+                    </div>
+                    <div class="flex justify-center ">
+                      <button type="button" class="mr-2 mt-4 bg-dc-400 hover:bg-gray-500 text-dark font-bold py-2 px-4 rounded" onclick="closePopup()">Close popup</button>
+                      <button type="submit"  class="ml-2 mt-4 bg-dc-400 hover:bg-gray-500 text-dark font-bold py-2 px-4 rounded" formaction="/loadFoldersPero" formmethod="post">Load folders</button>
+                    </div>
+
+                </div>
+              </div>
+
+              <!-- Choose engine and run pero -->
+              <div class="container flex flex-col items-center p-1">
+                <input type="submit" value="pero" title="pero"
+                  formaction="/peroaction" formmethod="post" class="w-32
+                  bg-light hover:bg-white cursor-pointer drop-shadow-xl m-1" id="pero">
+                <div class="m-1">
+                  <label for="engineId" class="text-light"> Engine: </label>
+                  <input type="text" id="engineId" class="w-4 h-6 rounded-sm
+                    border-none text-center" value="2" placeholder="2"
+                    name="engineId" maxlength="1" required>
+                </div>
+
+
+                <!-- <div class="m-1">
+                  <label for="pull-only" class="text-light"> pull-only</label>
+                  <input type="checkbox" value="true" name="pull_only"
+                    class="cursor-pointer">
+                </div> -->
+              </div>
+
+
+            </div>
+          </form>
+        </div>
+
+      </section>
+    </div>
+
+    <script>
+      let popup = document.getElementById("popup")
+      let pero = document.getElementById("pero")
+
+
+      btn.onclick = async (evt) => {
+  const out = {};
+  const dirHandle = await showDirectoryPicker();  
+  await handleDirectoryEntry( dirHandle, out );
+  console.log( out );
+};
+async function handleDirectoryEntry( dirHandle, out ) {
+  for await (const entry of dirHandle.values()) {
+    if (entry.kind === "file"){
+      const file = await entry.getFile();
+      out[ file.name ] = file;
+    }
+    if (entry.kind === "directory") {
+      const newOut = out[ entry.name ] = {};
+      await handleDirectoryEntry( entry, newOut );
+    }
+  }
+}
+
+
+    // Restricts input for the given textbox to the given inputFilter.
+    function setInputFilter(textbox, inputFilter, errMsg) {
+      ["input", "keydown", "keyup", "mousedown", "mouseup", "select", "contextmenu", "drop", "focusout"].forEach(function (event) {
+        textbox.addEventListener(event, function (e) {
+          if (inputFilter(this.value)) {
+            // Accepted value
+            if (["keydown", "mousedown", "focusout"].indexOf(e.type) >= 0) {
+              this.classList.remove("input-error");
+              this.setCustomValidity("");
+            }
+            this.oldValue = this.value;
+            this.oldSelectionStart = this.selectionStart;
+            this.oldSelectionEnd = this.selectionEnd;
+          } else if (this.hasOwnProperty("oldValue")) {
+            // Rejected value - restore the previous one
+            this.classList.add("input-error");
+            this.setCustomValidity(errMsg);
+            this.reportValidity();
+            this.value = this.oldValue;
+            this.setSelectionRange(this.oldSelectionStart, this.oldSelectionEnd);
+          } else {
+            // Rejected value - nothing to restore
+            this.value = "";
+          }
+        });
+      });
+    }
+
+
+    // Install input filters.
+    setInputFilter(document.getElementById("engineId"), function (value) {
+      return /^[1-6]*$/.test(value);
+    }, "Must be an unsigned integer 1-6");
+
+    function selectFolder(e) {
+      let output = document.getElementById("filename");
+      var theFiles = e.target.files;
+      var relativePath = theFiles[0].webkitRelativePath;
+      var folder = relativePath.split("/");
+      folder[0] = "./" + folder[0];
+      console.log(folder[0])
+      output.value = folder[0];
+    }
+
+    // function openPopup(){
+    //   popup.classList.add("open-popup");
+    //   pero.classList.add("hide");
+
+    //   document.getElementById("table0").classList.remove("hide");
+    // }
+
+    // function closePopup(){
+    //   popup.classList.remove("open-popup");
+    //   pero.classList.remove("hide");
+
+    //   document.getElementById("table0").classList.add("hide");
+    //   document.getElementById("table1").classList.add("hide");
+    // }
+
+    function selectInput(path){
+      document.getElementById("filename").value = path;
+      let chosenFileOutput = document.getElementById("chosenFileOutput");
+      chosenFileOutput.innerHTML = path;
+    }
+
+
+    function openPopup(){
+          popup.classList.add("open-popup")
+          pero.classList.add("hide")
+        }
+
+        function closePopup(){
+          popup.classList.remove("open-popup")
+          pero.classList.remove("hide")
+        }
+
+    function showSubfolders( tableName){
+      tableName = +tableName + 1;
+      console.log(tableName);
+      const element = document.querySelector("#table" + tableName);
+      if (element.classList.contains("hide")){
+        document.getElementById("table" + tableName).classList.remove("hide");
+      } else {
+        document.getElementById("table" + tableName).classList.add("hide");
+      }
+
+    }
+
+    $('#i_file').change( function(event) {
+      
+    }); 
+
+
+  </script>
+  </body>
+
+</html>

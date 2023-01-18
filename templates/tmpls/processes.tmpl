@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>rOPE - processes</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- <meta name="refresh" http-equiv="refresh" content="15" /> -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="/src/rope_drop.jpg">
+    <link rel="stylesheet" href="/static/css/mystyle.css">
+    <link rel="stylesheet" href="/static/css/styles.css">
+    <style>
+</style>
+  </head>
+  <body>
+
+
+
+    <section id="main">
+      <div class="sidebar fixed top-0 left-0 h-screen bg-dc-900 w-16 m-0 flex
+        flex-col justify-center shadow-lg">
+        <a href="/">
+          <div class="sidebar-icon group">
+
+            <i class="material-icons" style="font-size:30px">image</i>
+            <span class="sidebar-tooltip group-hover:scale-100">
+              IMGPREP
+            </span>
+
+          </div>
+
+
+          <a href="/pero">
+            <div class="sidebar-icon group"
+              onmouseover="brkimg.src='/src/brk.png';"
+              onmouseout="brkimg.src='/src/brk_dark.png';">
+              <img id="brkimg" src="/src/brk_dark.png" class="h-10">
+              <span class="sidebar-tooltip group-hover:scale-100">
+                PERO
+              </span>
+            </div>
+          </a>
+
+          <!-- <a href="/sound">
+            <div class="sidebar-icon group">
+              <i>sound</i>
+              <span class="sidebar-tooltip group-hover:scale-100">
+                SOUNDPREP
+              </span>
+            </div>
+          </a>
+  
+          <a href="/convertor">
+            <div class="sidebar-icon group">
+              <i>conv</i>
+              <span class="sidebar-tooltip group-hover:scale-100">
+                CONVERTOR
+              </span>
+            </div>
+          </a> -->
+
+          <div class="sidebar-icon-current group">
+            <i>logs</i>
+            <span class="sidebar-tooltip group-hover:scale-100">
+              LOGS
+            </span>
+          </div>
+
+          <a href="http://dk-wiki.infra.mzk.cz/doku.php?id=rope" target="_blank">
+            <div class="sidebar-icon group">
+              <i>wiki</i>
+              <span class="sidebar-tooltip group-hover:scale-100">
+                WIKI
+              </span>
+            </div>
+          </a>
+  <!-- 
+
+          <div class="sidebar-icon group">
+            <i>A</i>
+            <span class="sidebar-tooltip group-hover:scale-100">
+              test
+            </span>
+          </div> -->
+        </div>
+
+        <div class="flex flex-col items-center justify-center h-screen
+          space-y-16 md:space-y-24">
+          <div class="max-w-max text-light">
+            <a href="/processes"><h1 class="text-4xl align-middle drop-shadow-2xl">these are processes</h1></a>
+          </div>
+
+
+          <div class="w-9/12 h-3/6 overflow-y-auto bg-light border-2
+            text-center">
+            <table class="h-fit table-fixed border-collapse">
+              <tr>
+                <th class="border border-slate-600">Process ID</th>
+                <th class="border border-slate-600">Process started </th>
+                <th class="border border-slate-600">Process finished </th>
+                <th class="border border-slate-600">Input</th>
+                <th class="border border-slate-600">Type</th>
+                <th class="border border-slate-600">Done</th>
+                <th class="border border-slate-600">Status</th>
+                <th class="border border-slate-600">Priority</th>
+                <th></th>
+              </tr>
+
+              {{ range .proc }}
+              <tr class="border-t border-b border-slate-600">
+                <td width="30%">{{ .LogID }}</td>
+                <td width="15%">{{ .TimeStart }}</td>
+                <td width="15%">{{ .TimeEnd }}</td>
+                <td width="10%">{{ .Input }}</td>
+                <td width="7%">{{ .Type }}</td>
+                <td> {{ .State }}</td>
+                <td>{{ .Status }}</td>
+                <td>
+                  <input type="text" id="priorityInput{{ .LogID }}" class="w-12 h-6 rounded-sm
+                  border-none text-center" value="{{ .Priority }}" placeholder="1"
+                  name="priorityInput" required>
+                  
+                  <button title="Změnit prioritu" type="submit"
+                  onclick="changePriority('{{ .LogID }}', '{{ .Type }}')">Change</button>
+                </td>
+                <td width="5%">
+                  <div class="flex justify-evenly flex-row">
+                    <a href="/logs?logid={{ .LogID }}.log" target="_blank"
+                      title="Show logs"><img src="/src/wood-logs.png"
+                        width="16" height="16"></a>
+                    {{ if .ShowBtn }}
+                    <button title="Terminate process" type="submit"
+                      onclick="terminateProcess('{{ .LogID }}', '{{ .Type }}')"><img
+                        src="src/cancel.png"></button>
+                    {{ else }}
+                    <button title="Redo process" type="submit"
+                    onclick="redoProcess('{{ .Input }}', '{{ .Type }}', '{{ .EngineID }}')"><img
+                      src="src/redo.png" width="16" height="16"></button>
+                    {{ end }}
+                  </div>
+
+                </td>
+
+              </tr>
+              {{ end}}
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <script>
+    function openLog(logID){
+      var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function () {
+        }
+        xhr.open('get', '/logs?logid=' + logID + '.log', true);
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
+        xhr.send();
+    }
+
+    function terminateProcess(logID, type){
+      var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function () {
+          if (xhr.readyState === 4) {
+                alert("Ruším proces " + logID + ". Zruší se do 60sec.");
+            }
+        }
+        if (type === "Imgprep"){
+          xhr.open('get', '/terminateImg?logid=' + logID, true);
+        } else {
+          xhr.open('get', '/terminatePero?logid=' + logID, true);
+        }
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
+        xhr.send();
+    }
+
+    function redoProcess(Input, type , engideId){
+      console.log(Input + " " + engideId)
+      var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function () {
+          if (xhr.readyState === 4) {
+                alert("Znovu spouštím process " + Input);
+            }
+        }
+        console.log(type)
+        if (type === "Imgprep"){
+          xhr.open('get', '/redoImgprep?input=' + Input, true);
+        } else {
+          xhr.open('get', '/redoPero?input=' + Input + '&engineId=' + engideId, true);
+        }
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
+        xhr.send();
+    }
+
+  
+  // Install input filters.
+  document.getElementsByClassName("priorityInput").addEventListener("input", allowOnlyDigits);
+
+function allowOnlyDigits() {  
+  console.log("Ano")
+  if (this.validity.valid) {
+    this.setAttribute('current-value', this.value.replace(/[^\d]/g, ""));
+  }
+  this.value = this.getAttribute('current-value');
+}
+
+  function changePriority(logID, processType) {
+    let newPriority = document.getElementById("priorityInput"+logID).value;
+    console.log("Menim prioritu u:" + logID + " na:" + newPriority);
+    var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function () {
+        }
+        xhr.open('get', '/changePriority?logid=' + logID + '&type=' + processType + "&newPriority=" + newPriority, true);
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
+        xhr.send();
+  }
+
+  </script>
+
+    </body>
+  </html>
